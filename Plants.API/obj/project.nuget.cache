@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "UBv9LF7nrjc=",
+  "success": true,
+  "projectFilePath": "/home/goblin/Рабочий стол/api/Plants.API/Plants.API.csproj",
+  "expectedPackageFiles": [
+    "/home/goblin/.nuget/packages/microsoft.aspnetcore.openapi/9.0.9/microsoft.aspnetcore.openapi.9.0.9.nupkg.sha512",
+    "/home/goblin/.nuget/packages/microsoft.openapi/1.6.17/microsoft.openapi.1.6.17.nupkg.sha512"
+  ],
+  "logs": []
+}
