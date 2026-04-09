@@ -1,12 +1,1 @@
-{
-  "Version": 1,
-  "Hash": "0TR9K5u+LyeWTvbgjIAoBfBUKRs6HjcZPFhhkZZHC0U=",
-  "Source": "Plants.API",
-  "BasePath": "_content/Plants.API",
-  "Mode": "Default",
-  "ManifestType": "Build",
-  "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": [],
-  "Endpoints": []
-}
+{"Version":1,"Hash":"Ou0XgK5rn+1KrvfYVd0TAjR9IKxmki0mWYGLFcNCqfA=","Source":"Plants.API","BasePath":"/","Mode":"Root","ManifestType":"Build","ReferencedProjectsConfiguration":[],"DiscoveryPatterns":[],"Assets":[],"Endpoints":[]}
