@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Plants.API;
 
@@ -18,8 +19,8 @@ public partial class StepParameter
     public decimal MaxValue { get; set; }
 
     public string? Unit { get; set; }
-
+    [JsonIgnore]
     public virtual ICollection<BatchParameter> BatchParameters { get; set; } = new List<BatchParameter>();
-
+    [JsonIgnore]
     public virtual TechStep IdStepNavigation { get; set; } = null!;
 }

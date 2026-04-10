@@ -43,7 +43,6 @@ D:\PlantsSystem\PlantsAPI\Plants.API\bin\Debug\net9.0\Humanizer.dll
 D:\PlantsSystem\PlantsAPI\Plants.API\bin\Debug\net9.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 D:\PlantsSystem\PlantsAPI\Plants.API\bin\Debug\net9.0\Microsoft.AspNetCore.JsonPatch.dll
 D:\PlantsSystem\PlantsAPI\Plants.API\bin\Debug\net9.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
-D:\PlantsSystem\PlantsAPI\Plants.API\bin\Debug\net9.0\Microsoft.AspNetCore.OpenApi.dll
 D:\PlantsSystem\PlantsAPI\Plants.API\bin\Debug\net9.0\Microsoft.Bcl.AsyncInterfaces.dll
 D:\PlantsSystem\PlantsAPI\Plants.API\bin\Debug\net9.0\Microsoft.Build.Locator.dll
 D:\PlantsSystem\PlantsAPI\Plants.API\bin\Debug\net9.0\Microsoft.CodeAnalysis.dll
@@ -165,3 +164,6 @@ D:\PlantsSystem\PlantsAPI\Plants.API\obj\Debug\net9.0\refint\Plants.API.dll
 D:\PlantsSystem\PlantsAPI\Plants.API\obj\Debug\net9.0\Plants.API.pdb
 D:\PlantsSystem\PlantsAPI\Plants.API\obj\Debug\net9.0\Plants.API.genruntimeconfig.cache
 D:\PlantsSystem\PlantsAPI\Plants.API\obj\Debug\net9.0\ref\Plants.API.dll
+D:\PlantsSystem\PlantsAPI\Plants.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.Swagger.dll
+D:\PlantsSystem\PlantsAPI\Plants.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerGen.dll
+D:\PlantsSystem\PlantsAPI\Plants.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
