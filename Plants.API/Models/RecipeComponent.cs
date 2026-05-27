@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
-namespace Plants.API;
+namespace Plants.API.Models;
 
 public partial class RecipeComponent
 {
@@ -15,8 +14,8 @@ public partial class RecipeComponent
     public decimal Percentage { get; set; }
 
     public int LoadingOrder { get; set; }
-    [JsonIgnore]
+
     public virtual RawMaterial IdRawMaterialNavigation { get; set; } = null!;
-    [JsonIgnore]
+
     public virtual Recipe IdRecipeNavigation { get; set; } = null!;
 }

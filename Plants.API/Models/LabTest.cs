@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
-namespace Plants.API;
+namespace Plants.API.Models;
 
 public partial class LabTest
 {
@@ -25,12 +24,12 @@ public partial class LabTest
     public string? Conclusion { get; set; }
 
     public string? Comment { get; set; }
-    [JsonIgnore]
+
     public virtual User? AssignedToNavigation { get; set; }
-    [JsonIgnore]
+
     public virtual ProductionBatch? IdProductionBatchNavigation { get; set; }
-    [JsonIgnore]
+
     public virtual RawMaterialBatch? IdRawMaterialBatchNavigation { get; set; }
-    [JsonIgnore]
+
     public virtual ICollection<LabResult> LabResults { get; set; } = new List<LabResult>();
 }

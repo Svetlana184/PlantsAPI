@@ -1,54 +1,58 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Plants.API.Models;
 using Plants.API.Services;
 
 namespace Plants.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
-    public class LabTestController : GenericController<LabTest>
+    [ApiController]
+    public class LabTestController : ControllerBase
     {
-        private readonly PostgresContext _context;
+        private readonly IService<LabTest> _service;
 
-        public LabTestController(IService<LabTest> service, PostgresContext context)
-            : base(service) => _context = context;
-
-        // Получить испытания по партии
-        [HttpGet("by-batch/{batchId}")]
-        public async Task<IActionResult> GetByBatch(int batchId)
+        public LabTestController(IService<LabTest> service)
         {
-            var tests = await _context.LabTests
-                .Where(t => t.IdProductionBatch == batchId)
-                .Include(t => t.LabResults)
-                .ToListAsync();
-            return Ok(tests);
+            _service = service;
         }
 
-        // Получить испытания по сырью
-        [HttpGet("by-raw-batch/{rawBatchId}")]
-        public async Task<IActionResult> GetByRawBatch(int rawBatchId)
+        [HttpGet("getall")]
+        public async Task<ActionResult<IEnumerable<LabTest>>> GetAll()
         {
-            var tests = await _context.LabTests
-                .Where(t => t.IdRawMaterialBatch == rawBatchId)
-                .Include(t => t.LabResults)
-                .ToListAsync();
-            return Ok(tests);
+            var entities = await _service.GetAll();
+            return Ok(entities);
         }
 
-        // Завершить испытание
-        [HttpPost("{id}/complete")]
-        public async Task<IActionResult> Complete(int id, [FromBody] LabTest result)
+        [HttpGet("get/{id}")]
+        public async Task<ActionResult<LabTest>> GetById(int id)
         {
-            var test = await _context.LabTests.FindAsync(id);
-            if (test == null) return NotFound();
+            var entity = await _service.GetById(id);
+            if (entity == null) return NotFound();
+            return Ok(entity);
+        }
 
-            test.Status = "Завершен";
-            test.FinishedAt = DateTime.UtcNow;
-            test.Conclusion = result.Conclusion;
-            test.Comment = result.Comment;
+        [HttpPost("post")]
+        public async Task<ActionResult<LabTest>> Create([FromBody] LabTest entity)
+        {
+            await _service.Create(entity);
+            return CreatedAtAction(nameof(GetById), new { id = entity.IdTest }, entity);
+        }
 
-            await _context.SaveChangesAsync();
+        [HttpPut("update/{id}")]
+        public async Task<ActionResult> Update(int id, [FromBody] LabTest entity)
+        {
+            if (entity.IdTest != id) return BadRequest();
+            await _service.Update(entity);
+            return NoContent();
+        }
 
-            return Ok(test);
+        [HttpDelete("delete/{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            await _service.Delete(id);
+            return NoContent();
         }
     }
 }

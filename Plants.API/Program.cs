@@ -1,4 +1,3 @@
-using Plants.API;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Plants.API.Models;
@@ -25,7 +24,26 @@ builder.Services.AddDbContext<PostgresContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Generic Service
-builder.Services.AddScoped(typeof(IService<>), typeof(GenericService<>));
+
+builder.Services.AddScoped<IService<BatchParameter>, BatchParameterService>();
+builder.Services.AddScoped<IService<BatchRawMaterial>, BatchRawMaterialService>();
+builder.Services.AddScoped<IService<BatchStep>, BatchStepService>();
+builder.Services.AddScoped<IService<Department>, DepartmentService>();
+builder.Services.AddScoped<IService<Deviation>, DeviationService>();
+builder.Services.AddScoped<IService<Equipment>, EquipmentService>();
+builder.Services.AddScoped<IService<Event>, EventService>();
+builder.Services.AddScoped<IService<LabResult>, LabResultService>();
+builder.Services.AddScoped<IService<LabTest>, LabTestService>();
+builder.Services.AddScoped<IService<Product>, ProductService>();
+builder.Services.AddScoped<IService<ProductionBatch>, ProductionBatchService>();
+builder.Services.AddScoped<IService<RawMaterial>, RawMaterialService>();
+builder.Services.AddScoped<IService<RawMaterialBatch>, RawMaterialBatchService>();
+builder.Services.AddScoped<IService<Recipe>, RecipeService>();
+builder.Services.AddScoped<IService<RecipeComponent>, RecipeComponentService>();
+builder.Services.AddScoped<IService<StepParameter>, StepParameterService>();
+builder.Services.AddScoped<IService<TechMap>, TechMapService>();
+builder.Services.AddScoped<IService<TechStep>, TechStepService>();
+builder.Services.AddScoped<IService<User>, UserService>();
 
 // Controllers и Swagger
 builder.Services.AddControllers();

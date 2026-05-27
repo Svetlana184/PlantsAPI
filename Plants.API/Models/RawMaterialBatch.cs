@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
-namespace Plants.API;
+namespace Plants.API.Models;
 
 public partial class RawMaterialBatch
 {
@@ -15,10 +14,10 @@ public partial class RawMaterialBatch
     public decimal Quantity { get; set; }
 
     public string? Status { get; set; }
-    [JsonIgnore]
+
     public virtual ICollection<BatchRawMaterial> BatchRawMaterials { get; set; } = new List<BatchRawMaterial>();
-    [JsonIgnore]
+
     public virtual RawMaterial IdRawMaterialNavigation { get; set; } = null!;
-    [JsonIgnore]
+
     public virtual ICollection<LabTest> LabTests { get; set; } = new List<LabTest>();
 }

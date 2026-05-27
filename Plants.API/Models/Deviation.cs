@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
-namespace Plants.API;
+namespace Plants.API.Models;
 
 public partial class Deviation
 {
@@ -25,8 +24,8 @@ public partial class Deviation
     public DateTime? ResolvedAt { get; set; }
 
     public string? ResolutionComment { get; set; }
-    [JsonIgnore]
+
     public virtual ProductionBatch IdProductionBatchNavigation { get; set; } = null!;
-    [JsonIgnore]
+
     public virtual TechStep? IdStepNavigation { get; set; }
 }

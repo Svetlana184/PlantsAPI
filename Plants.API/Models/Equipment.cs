@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
-namespace Plants.API;
+namespace Plants.API.Models;
 
 public partial class Equipment
 {
@@ -13,6 +12,6 @@ public partial class Equipment
     public string Type { get; set; } = null!;
 
     public string? Status { get; set; }
-    [JsonIgnore]
+
     public virtual ICollection<ProductionBatch> ProductionBatches { get; set; } = new List<ProductionBatch>();
 }

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
-namespace Plants.API;
+namespace Plants.API.Models;
 
 public partial class LabResult
 {
@@ -19,6 +18,6 @@ public partial class LabResult
     public decimal? ActualValue { get; set; }
 
     public string? Unit { get; set; }
-    [JsonIgnore]
+
     public virtual LabTest IdTestNavigation { get; set; } = null!;
 }

@@ -1,75 +1,58 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Plants.API.Models;
 using Plants.API.Services;
 
 namespace Plants.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
-    public class ProductionBatchController : GenericController<ProductionBatch>
+    [ApiController]
+    public class ProductionBatchController : ControllerBase
     {
-        private readonly PostgresContext _context;
+        private readonly IService<ProductionBatch> _service;
 
-        public ProductionBatchController(IService<ProductionBatch> service, PostgresContext context)
-            : base(service) => _context = context;
-
-        // Получить активные партии
-        [HttpGet("active")]
-        public async Task<IActionResult> GetActive()
+        public ProductionBatchController(IService<ProductionBatch> service)
         {
-            var batches = await _context.ProductionBatches
-                .Where(b => b.Status == "В работе" || b.Status == "Создана")
-                .Include(b => b.IdProductNavigation)
-                .Include(b => b.IdEquipmentNavigation)
-                .ToListAsync();
-            return Ok(batches);
+            _service = service;
         }
 
-        // Получить партии с отклонениями
-        [HttpGet("with-deviations")]
-        public async Task<IActionResult> GetWithDeviations()
+        [HttpGet("getall")]
+        public async Task<ActionResult<IEnumerable<ProductionBatch>>> GetAll()
         {
-            var batches = await _context.ProductionBatches
-                .Where(b => b.Deviations.Any())
-                .ToListAsync();
-            return Ok(batches);
+            var entities = await _service.GetAll();
+            return Ok(entities);
         }
 
-        // Получить шаги партии
-        [HttpGet("{id}/steps")]
-        public async Task<IActionResult> GetSteps(int id)
+        [HttpGet("get/{id}")]
+        public async Task<ActionResult<ProductionBatch>> GetById(int id)
         {
-            var steps = await _context.BatchSteps
-                .Where(s => s.IdProductionBatch == id)
-                .ToListAsync();
-            return Ok(steps);
+            var entity = await _service.GetById(id);
+            if (entity == null) return NotFound();
+            return Ok(entity);
         }
 
-        // Запустить партию
-        [HttpPost("{id}/start")]
-        public async Task<IActionResult> StartBatch(int id)
+        [HttpPost("post")]
+        public async Task<ActionResult<ProductionBatch>> Create([FromBody] ProductionBatch entity)
         {
-            var batch = await _context.ProductionBatches.FindAsync(id);
-            if (batch == null) return NotFound();
-
-            batch.Status = "В работе";
-            batch.StartedAt = DateTime.UtcNow;
-            await _context.SaveChangesAsync();
-
-            return Ok(batch);
+            await _service.Create(entity);
+            return CreatedAtAction(nameof(GetById), new { id = entity.IdBatch }, entity);
         }
 
-        // Завершить партию
-        [HttpPost("{id}/finish")]
-        public async Task<IActionResult> FinishBatch(int id)
+        [HttpPut("update/{id}")]
+        public async Task<ActionResult> Update(int id, [FromBody] ProductionBatch entity)
         {
-            var batch = await _context.ProductionBatches.FindAsync(id);
-            if (batch == null) return NotFound();
+            if (entity.IdBatch != id) return BadRequest();
+            await _service.Update(entity);
+            return NoContent();
+        }
 
-            batch.Status = "Завершена";
-            batch.FinishedAt = DateTime.UtcNow;
-            await _context.SaveChangesAsync();
-
-            return Ok(batch);
+        [HttpDelete("delete/{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            await _service.Delete(id);
+            return NoContent();
         }
     }
 }

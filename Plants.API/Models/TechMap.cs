@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
-namespace Plants.API;
+namespace Plants.API.Models;
 
 public partial class TechMap
 {
@@ -17,12 +16,12 @@ public partial class TechMap
     public int CreatedBy { get; set; }
 
     public DateTime? CreatedAt { get; set; }
-    [JsonIgnore]
+
     public virtual User CreatedByNavigation { get; set; } = null!;
-    [JsonIgnore]
+
     public virtual Product IdProductNavigation { get; set; } = null!;
-    [JsonIgnore]
+
     public virtual ICollection<ProductionBatch> ProductionBatches { get; set; } = new List<ProductionBatch>();
-    [JsonIgnore]
+
     public virtual ICollection<TechStep> TechSteps { get; set; } = new List<TechStep>();
 }

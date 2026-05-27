@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
-namespace Plants.API;
+namespace Plants.API.Models;
 
 public partial class BatchParameter
 {
@@ -16,9 +15,7 @@ public partial class BatchParameter
 
     public DateTime? RecordedAt { get; set; }
 
-    [JsonIgnore]
-
     public virtual BatchStep IdExecutionNavigation { get; set; } = null!;
-    [JsonIgnore]
+
     public virtual StepParameter IdParamNavigation { get; set; } = null!;
 }

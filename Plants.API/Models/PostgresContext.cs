@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace Plants.API;
+namespace Plants.API.Models;
 
 public partial class PostgresContext : DbContext
 {
@@ -55,15 +55,17 @@ public partial class PostgresContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseNpgsql("Host=localhost;Database=postgres;Username=postgres;Password=1234");
+        => optionsBuilder.UseNpgsql("Host=localhost;Port=5432;Database=postgres;Username=postgres;Password=1234");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.HasPostgresExtension("pgagent", "pgagent");
+
         modelBuilder.Entity<BatchParameter>(entity =>
         {
             entity.HasKey(e => e.IdActual).HasName("batch_parameters_pkey");
 
-            entity.ToTable("batch_parameters");
+            entity.ToTable("batch_parameters", "plants");
 
             entity.Property(e => e.IdActual).HasColumnName("id_actual");
             entity.Property(e => e.ActualValue)
@@ -90,7 +92,7 @@ public partial class PostgresContext : DbContext
         {
             entity.HasKey(e => e.IdRecord).HasName("batch_raw_materials_pkey");
 
-            entity.ToTable("batch_raw_materials");
+            entity.ToTable("batch_raw_materials", "plants");
 
             entity.Property(e => e.IdRecord).HasColumnName("id_record");
             entity.Property(e => e.IdProductionBatch).HasColumnName("id_production_batch");
@@ -114,7 +116,7 @@ public partial class PostgresContext : DbContext
         {
             entity.HasKey(e => e.IdExecution).HasName("batch_steps_pkey");
 
-            entity.ToTable("batch_steps");
+            entity.ToTable("batch_steps", "plants");
 
             entity.Property(e => e.IdExecution).HasColumnName("id_execution");
             entity.Property(e => e.Comment).HasColumnName("comment");
@@ -155,7 +157,7 @@ public partial class PostgresContext : DbContext
         {
             entity.HasKey(e => e.IdDepartment).HasName("departments_pkey");
 
-            entity.ToTable("departments");
+            entity.ToTable("departments", "plants");
 
             entity.Property(e => e.IdDepartment).HasColumnName("id_department");
             entity.Property(e => e.IdParentDepartment).HasColumnName("id_parent_department");
@@ -172,7 +174,7 @@ public partial class PostgresContext : DbContext
         {
             entity.HasKey(e => e.IdDeviation).HasName("deviations_pkey");
 
-            entity.ToTable("deviations");
+            entity.ToTable("deviations", "plants");
 
             entity.Property(e => e.IdDeviation).HasColumnName("id_deviation");
             entity.Property(e => e.ActualValue)
@@ -212,7 +214,7 @@ public partial class PostgresContext : DbContext
         {
             entity.HasKey(e => e.IdEquipment).HasName("equipment_pkey");
 
-            entity.ToTable("equipment");
+            entity.ToTable("equipment", "plants");
 
             entity.Property(e => e.IdEquipment).HasColumnName("id_equipment");
             entity.Property(e => e.Name)
@@ -231,7 +233,7 @@ public partial class PostgresContext : DbContext
         {
             entity.HasKey(e => e.IdEvent).HasName("events_pkey");
 
-            entity.ToTable("events");
+            entity.ToTable("events", "plants");
 
             entity.Property(e => e.IdEvent).HasColumnName("id_event");
             entity.Property(e => e.CreatedAt)
@@ -258,7 +260,7 @@ public partial class PostgresContext : DbContext
         {
             entity.HasKey(e => e.IdResult).HasName("lab_results_pkey");
 
-            entity.ToTable("lab_results");
+            entity.ToTable("lab_results", "plants");
 
             entity.Property(e => e.IdResult).HasColumnName("id_result");
             entity.Property(e => e.ActualValue)
@@ -287,7 +289,7 @@ public partial class PostgresContext : DbContext
         {
             entity.HasKey(e => e.IdTest).HasName("lab_tests_pkey");
 
-            entity.ToTable("lab_tests");
+            entity.ToTable("lab_tests", "plants");
 
             entity.HasIndex(e => e.TestNumber, "lab_tests_test_number_key").IsUnique();
 
@@ -331,7 +333,7 @@ public partial class PostgresContext : DbContext
         {
             entity.HasKey(e => e.IdProduct).HasName("products_pkey");
 
-            entity.ToTable("products");
+            entity.ToTable("products", "plants");
 
             entity.HasIndex(e => e.Code, "products_code_key").IsUnique();
 
@@ -358,7 +360,7 @@ public partial class PostgresContext : DbContext
         {
             entity.HasKey(e => e.IdBatch).HasName("production_batches_pkey");
 
-            entity.ToTable("production_batches");
+            entity.ToTable("production_batches", "plants");
 
             entity.HasIndex(e => e.BatchNumber, "production_batches_batch_number_key").IsUnique();
 
@@ -421,7 +423,7 @@ public partial class PostgresContext : DbContext
         {
             entity.HasKey(e => e.IdRawMaterial).HasName("raw_materials_pkey");
 
-            entity.ToTable("raw_materials");
+            entity.ToTable("raw_materials", "plants");
 
             entity.HasIndex(e => e.Code, "raw_materials_code_key").IsUnique();
 
@@ -441,7 +443,7 @@ public partial class PostgresContext : DbContext
         {
             entity.HasKey(e => e.IdBatch).HasName("raw_material_batches_pkey");
 
-            entity.ToTable("raw_material_batches");
+            entity.ToTable("raw_material_batches", "plants");
 
             entity.HasIndex(e => e.BatchNumber, "raw_material_batches_batch_number_key").IsUnique();
 
@@ -468,7 +470,7 @@ public partial class PostgresContext : DbContext
         {
             entity.HasKey(e => e.IdRecipe).HasName("recipes_pkey");
 
-            entity.ToTable("recipes");
+            entity.ToTable("recipes", "plants");
 
             entity.HasIndex(e => new { e.IdProduct, e.VersionNumber }, "recipes_id_product_version_number_key").IsUnique();
 
@@ -500,7 +502,7 @@ public partial class PostgresContext : DbContext
         {
             entity.HasKey(e => e.IdRecord).HasName("recipe_components_pkey");
 
-            entity.ToTable("recipe_components");
+            entity.ToTable("recipe_components", "plants");
 
             entity.Property(e => e.IdRecord).HasColumnName("id_record");
             entity.Property(e => e.IdRawMaterial).HasColumnName("id_raw_material");
@@ -524,7 +526,7 @@ public partial class PostgresContext : DbContext
         {
             entity.HasKey(e => e.IdParam).HasName("step_parameters_pkey");
 
-            entity.ToTable("step_parameters");
+            entity.ToTable("step_parameters", "plants");
 
             entity.Property(e => e.IdParam).HasColumnName("id_param");
             entity.Property(e => e.IdStep).HasColumnName("id_step");
@@ -553,7 +555,7 @@ public partial class PostgresContext : DbContext
         {
             entity.HasKey(e => e.IdMap).HasName("tech_maps_pkey");
 
-            entity.ToTable("tech_maps");
+            entity.ToTable("tech_maps", "plants");
 
             entity.HasIndex(e => new { e.IdProduct, e.VersionNumber }, "tech_maps_id_product_version_number_key").IsUnique();
 
@@ -585,7 +587,7 @@ public partial class PostgresContext : DbContext
         {
             entity.HasKey(e => e.IdStep).HasName("tech_steps_pkey");
 
-            entity.ToTable("tech_steps");
+            entity.ToTable("tech_steps", "plants");
 
             entity.Property(e => e.IdStep).HasColumnName("id_step");
             entity.Property(e => e.Description).HasColumnName("description");
@@ -607,7 +609,7 @@ public partial class PostgresContext : DbContext
         {
             entity.HasKey(e => e.IdUser).HasName("users_pkey");
 
-            entity.ToTable("users");
+            entity.ToTable("users", "plants");
 
             entity.HasIndex(e => e.Login, "users_login_key").IsUnique();
 

@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
-namespace Plants.API;
+namespace Plants.API.Models;
 
 public partial class BatchStep
 {
@@ -23,14 +22,14 @@ public partial class BatchStep
     public DateTime? FinishedAt { get; set; }
 
     public string? Comment { get; set; }
-    [JsonIgnore]
+
     public virtual ICollection<BatchParameter> BatchParameters { get; set; } = new List<BatchParameter>();
-    [JsonIgnore]
+
     public virtual User? FinishedByNavigation { get; set; }
-    [JsonIgnore]
+
     public virtual ProductionBatch IdProductionBatchNavigation { get; set; } = null!;
-    [JsonIgnore]
+
     public virtual TechStep IdStepNavigation { get; set; } = null!;
-    [JsonIgnore]
+
     public virtual User? StartedByNavigation { get; set; }
 }

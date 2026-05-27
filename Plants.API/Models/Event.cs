@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
-namespace Plants.API;
+namespace Plants.API.Models;
 
 public partial class Event
 {
@@ -17,8 +16,8 @@ public partial class Event
     public string Message { get; set; } = null!;
 
     public DateTime? CreatedAt { get; set; }
-    [JsonIgnore]
+
     public virtual ProductionBatch? IdProductionBatchNavigation { get; set; }
-    [JsonIgnore]
+
     public virtual User? IdUserNavigation { get; set; }
 }

@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Plants.API.Models;
 
 namespace Plants.API.Services
 {
